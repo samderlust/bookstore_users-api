@@ -1,6 +1,9 @@
 package errors
 
-import "net/http"
+import (
+	"errors"
+	"net/http"
+)
 
 //RestErr define  http response error
 type RestErr struct {
@@ -25,4 +28,17 @@ func NewNotFoundError(message string) *RestErr {
 		Status:  http.StatusNotFound,
 		Error:   "notFount",
 	}
+}
+
+//NewInternalServerError return a pointer to RestErr with internal server error
+func NewInternalServerError(message string) *RestErr {
+	return &RestErr{
+		Message: message,
+		Status:  http.StatusInternalServerError,
+		Error:   "internalServerError",
+	}
+}
+
+func NewError(msg string) error {
+	return errors.New(msg)
 }
